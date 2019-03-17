@@ -15,6 +15,8 @@ public class Car {
         this.spz = spz;
         this.price = price;
     }
+    public Car(){
+    }
 
     public String getBrand() {
         return brand;
@@ -34,5 +36,25 @@ public class Car {
 
     public int getPrice() {
         return price;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public void setFuel(char fuel) {
+        this.fuel = fuel;
+    }
+
+    public void setSpz(String spz) {
+        this.spz = spz;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

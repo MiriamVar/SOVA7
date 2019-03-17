@@ -1,11 +1,12 @@
 package sk.itsovy.sova7;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jdom2.Element;
-import org.w3c.dom.Element;
 
 public class Database implements carmethods{
 
@@ -190,12 +191,52 @@ public class Database implements carmethods{
     }
 
     public void generateXML(){
+        Connection con = getConnection();
+        String query = "select * from cars";
+
+        ArrayList<Car> auta = new ArrayList<>();
+        ResultSet res;
+
+        String output="";
+        output += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+        output += "<cars >";
         try {
-            Element carsElement = new Element() {
+            PreparedStatement statement = con.prepareStatement(query);
+            res = statement.executeQuery();
+            while (res.next()) {
+                Car swap_auto = new Car();
+                swap_auto.setBrand(res.getString("brand"));
+                swap_auto.setColor(res.getString("color"));
+                swap_auto.setSpz(res.getString("spz"));
+                swap_auto.setFuel(res.getString("fuel").charAt(0));
+                swap_auto.setPrice(res.getInt("price"));
+
+                auta.add(swap_auto);
+
+                for (Car element: auta) {
+                    output += "\t<car>\n";
+                    output += "\t\t<brand>"+element.getBrand()+"</brand>\n";
+                    output += "\t\t<color>"+element.getColor()+"</color>\n";
+                    output += "\t\t<fuel>"+element.getFuel()+"</fuel>\n";
+                    output += "\t\t<spz>"+element.getSpz()+"</spz>\n";
+                    output += "\t\t<price>"+element.getPrice()+"</price>\n";
+                    output += "\t</car>\n";
+                }
+
             }
+            output += "</cars >";
+            File subor = new File("C:\\Users\\user\\IdeaProjects\\sova7\\src\\sk\\itsovy\\sova7\\XMLfile.xml");
+            FileWriter writer = new FileWriter(subor);
+            writer.write(output);
+            writer.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
         }
-
-
 
 
     }

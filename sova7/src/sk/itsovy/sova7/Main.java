@@ -7,7 +7,7 @@ public class Main {
 
         Database database = new Database();
 
-        Car auticko = new Car("seat","cierne",'F',"BA467KL",9700);
+        Car auticko = new Car("opel","modre",'P',"NT468PR",10450);
         database.addCar(auticko);
 
         List<Car> auto = database.getCarsByPrice(11000);
@@ -31,6 +31,8 @@ public class Main {
         }
 
         database.changeSPZ("BA467KL","BL467KL");
+
+        database.generateXML();
 
 
     }
